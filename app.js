@@ -45,9 +45,47 @@ let currentIdNumber = tasks.length;
 // 0 - Bajar repo, todos los ejercicios seran parte
 // del mismo proyecto js-dom-manipulation-essentials
 // Hacer una funcion que cree dinamicamente las task
-function createTaskComponent(task) {}
 
-function loadTasks() {}
+function createTaskComponent(task) {
+  let template = `
+    <li id =${task.id}>
+      <p> Name: ${task.name} </p>
+      <p> Owner: ${task.owner} </p>
+      <p> Description: ${task.description} </p>
+      <img src="${task.imgUrl}"/>
+    </li>
+   `;
+
+  let lista = document.getElementsByTagName("ul")[0];
+  lista.insertAdjacentHTML("beforeend", template);
+}
+
+//otra forma de hacerlo
+function createTaskComponent1(task) {
+  let list = document.getElementsByTagName("ul")[0];
+  let element = document.createElement("li");
+  for (let key in task) {
+    if (key !== "id" && key !== "imgUrl") {
+      let p = document.createElement("p");
+      p.textContent = `${key}: ${task[key]}`;
+      element.appendChild(p);
+    } else if (key == "id") {
+      element.setAttribute("id", task[key]);
+    } else if ((key = "imgUrl")) {
+      let img = document.createElement("img");
+      img.setAttribute("src", task[key]);
+      element.appendChild(img);
+    }
+  }
+
+  list.appendChild(element);
+}
+
+function loadTasks() {
+  tasks.forEach((task) => createTaskComponent(task));
+}
+
+loadTasks();
 
 // 1 - Funcion
 // Mostrar en un mensaje de alerta los valores del form
@@ -55,8 +93,23 @@ function addTaskAlert(newTask) {}
 
 // 2 - Funcion
 // Agregar elemento en la lista al llenar el formulario
+const addTask = document.getElementsByClassName("submit-button")[0];
+addTask.addEventListener("click", addTaskHandler);
 
-function addTaskHandler(event) {}
+function addTaskHandler(event) {
+  event.preventDefault(); // evita que la pagina se recargue
+
+  const nameInput = document.getElementById("nameInput").value;
+  const ownerInput = document.getElementById("ownerInput").value;
+  const descriptionInput = document.getElementById("descriptionInput").value;
+  const imgUrlInput = document.getElementById("imgUrlInput").value;
+
+  let idNum = tasks.length+1; // buscar otra forma de obtener el id (por mientras funciona)
+
+  tasks.push({ id: idNum, owner: ownerInput, name: nameInput, description: descriptionInput, imgUrl: imgUrlInput }); // agrego la nueva tarea
+  createTaskComponent(tasks[tasks.length-1]) // lo agrego al task board
+
+}
 
 // 3 - Funcion
 // Eliminar elemento en la lista al hacer click sobre el elemento
@@ -64,7 +117,9 @@ function deleteTaskHandler(taskElement) {}
 
 // 4 - Funcion
 // Crear un boton para vaciar/eliminar todas las tareas
-function deleteAllTaskHandler() {}
+
+function deleteAllTaskHandler() {
+}
 
 // 5 - Funcion
 // Si ya no quedan tareas navegar programaticamente
