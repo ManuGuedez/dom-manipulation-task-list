@@ -106,11 +106,11 @@ function loadTasks() {
 
 // 1 - Funcion: Mostrar en un mensaje de alerta los valores del form
 function addTaskAlert(newTask) {
-  const message = `
-        Name: ${newTask.name}
-        Owner: ${newTask.owner}
-        Description: ${newTask.description}
-        imgUrl: ${newTask.imgUrl}
+  const message = `NEW TASK ADDED
+    -> Name: ${newTask.name}
+    -> Owner: ${newTask.owner}
+    -> Description: ${newTask.description}
+    -> imgUrl: ${newTask.imgUrl}
   `;
   window.alert(message);
 }
