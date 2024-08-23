@@ -59,25 +59,28 @@ clearAll.addEventListener("click", deleteAllTaskHandler);
 // Hacer una funcion que cree dinamicamente las task
 function createTaskComponent(task) {
   let template = `
-    <li id =${task.id}>
-      <div>
-        <p> Name: ${task.name} </p>
-        <p> Owner: ${task.owner} </p>
-        <p> Description: ${task.description} </p>
-        <img src="${task.imgUrl}"/>
+    <li id="${task.id}" class="task">
+      <img src="${task.imgUrl}" />
+      <div class="task-information">
+        <h3>Task Owner</h3>
+        <p>${task.owner}</p>
+        <h3>Task Name</h3>
+        <p>${task.name}</p>
+        <h3>Task Description</h3>
+        <p>${task.description}</p>
       </div>
-    </li>
-   `;
+    </li>`;
 
   let lista = document.getElementsByTagName("ul")[0];
   lista.insertAdjacentHTML("beforeend", template);
 
   let listItem = document.getElementById(task.id);
+
   // creo el evento de eliminación al hacer clic
   listItem.addEventListener("click", () => deleteTaskHandler(listItem));
 }
 
-//otra forma de hacerlo
+//otra forma de hacerlo (no sigue el formato)
 function createTaskComponent1(task) {
   let list = document.getElementsByTagName("ul")[0];
   let element = document.createElement("li");
@@ -94,8 +97,11 @@ function createTaskComponent1(task) {
       element.appendChild(img);
     }
   }
-
   list.appendChild(element);
+  let listItem = document.getElementById(task.id);
+
+  // creo el evento de eliminación al hacer clic
+  listItem.addEventListener("click", () => deleteTaskHandler(listItem));
 }
 
 function loadTasks() {
